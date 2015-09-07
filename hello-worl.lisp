@@ -1,1 +1,2 @@
-(defun hello-world () (format t "hellor world"))
+(defun hello-world ()
+  (format t "Hello, World!"))
