@@ -37,13 +37,10 @@
     (with-standard-io-syntax
       (setf *db* (read in)))))
 
-;; (defun select-by-artist ()
-;;   (remove-if-not
-;;    #'(lambda (cd) (equal (getf cd :artist) (prompt-read "Artist to look for?")))
-;;    *db*))
-
 (defun select (selector-fn) ;; select from DB
   (remove-if-not selector-fn *db*))
+(defun select-nice (selector-fn) ;; pretty print of select from DB
+  (format t "~{~{~a:~10t~a~%~}~%~}" (remove-if-not selector-fn *db*)))
 
 (defun where (&key title artist rating (ripped nil ripped-p)) ;; helper: prompt for DB fields, helps for the select fn above
   #'(lambda (cd)
@@ -52,3 +49,4 @@
        (if artist   (equal (getf cd :artist) artist) t)
        (if rating   (equal (getf cd :rating) rating) t)
        (if ripped-p (equal (getf cd :ripped) ripped) t))))
+
